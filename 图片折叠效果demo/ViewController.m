@@ -61,7 +61,7 @@
     
     [self.view addSubview:self.topHalfImg];
 
-    
+    //（topHalfImg.frame 写在 bottom.frame 之前 是为了解决图层问题，防止topHalfImg折叠时被挡住）
     
     // 添加UIPanGestureRecognizer平移手势
     self.alphaUpView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 200)/2, 150, 200, 200)];
@@ -90,6 +90,8 @@
 
 }
 
+
+#pragma mark UIPanGestureRecognizer
 - (void)panGestureRecognizerAction:(UIPanGestureRecognizer *)sender {
     
     // 获取手指偏移量
@@ -109,6 +111,8 @@
     
     // 设置阴影不透明度
     _shadowLayer.opacity = transP.y * 1 / 200.0;
+    
+    
     
     //在手指抬起的时候，需要把阴影设置隐藏，不透明度为0；折叠图片还原，其实就是把形变清空。
     if (sender.state == UIGestureRecognizerStateEnded) { // 手指抬起
